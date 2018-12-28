@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
-        <title>Spring Security Example - Login</title>
+        <title>UserChat - Login</title>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <link rel="stylesheet" th:href="@{/css/main.css}" />
+        <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
     </head>
     <body>
         <div th:if="${param.error}">
@@ -21,7 +21,7 @@
 
         <div id="username-page">
             <div class="username-page-container">
-                <h1 class="title">Type your username</h1>
+                <h1 class="title">Login to UserChat</h1>
                 <form id="usernameForm" name="usernameForm" th:action="@{/login}" method="post">
                     <div class="form-group">
                         <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" class="form-control" />

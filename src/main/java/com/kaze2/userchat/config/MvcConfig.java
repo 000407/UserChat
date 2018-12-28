@@ -1,4 +1,4 @@
-package hello;
+package com.kaze2.userchat.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +22,14 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(
                 "/webjars/**",
-                "/img/**",
-                "/css/**",
-                "/js/**")
+                "/assets/img/**",
+                "/assets/css/**",
+                "/assets/js/**")
                 .addResourceLocations(
                         "classpath:/META-INF/resources/webjars/",
-                        "classpath:/static/img/",
-                        "classpath:/static/css/",
-                        "classpath:/static/js/");
+                        "classpath:/static/assets/img/",
+                        "classpath:/static/assets/css/",
+                        "classpath:/static/assets/js/");
     }
 
     @Bean(name="dataSource")

@@ -1,4 +1,4 @@
-package hello;
+package com.kaze2;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

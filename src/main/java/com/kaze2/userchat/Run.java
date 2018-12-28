@@ -1,11 +1,11 @@
-package hello;
+package com.kaze2.userchat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserChat {
+public class Run {
     public static void main(String[] args) throws Throwable {
-        SpringApplication.run(UserChat.class, args);
+        SpringApplication.run(Run.class, args);
     }
 }
