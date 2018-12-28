@@ -1,13 +1,12 @@
 'use strict';
 
-var usernamePage = document.querySelector('#username-page');
-var chatPage = document.querySelector('#chat-page');
 var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var usersList = document.querySelector('#usersList');
 var connectingElement = document.querySelector('.connecting');
 var conversations = {};
+const me = document.querySelector("#username").value;
 
 var stompClient = null;
 var username = null;
@@ -17,35 +16,36 @@ var colors = [
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
+$(document).ready(function () {
+    connect();
+});
+
 function connect(event) {
-    username = document.querySelector('#name').value.trim();
+    username = document.querySelector('#username').value.trim();
 
     if(username) {
-        usernamePage.classList.add('hidden');
-        chatPage.classList.remove('hidden');
-
         var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
-        stompClient.connect(username, "passcode", onConnected, onError);
+        stompClient.connect({}, onConnected, onError);
     }
     event.preventDefault();
 }
 
 
-function onConnected(response) {
-    console.log(response);
-    // Subscribe to the Public Topic
-    stompClient.subscribe('/topic/public', onBroadcastReceived);
-    stompClient.subscribe('/topic/public', onBroadcastReceived);
+function onConnected() {
+    // Subscribe to the topics
+    stompClient.subscribe('/users/online', onUserListUpdated);
+    stompClient.subscribe('/user/users/online', onUserListUpdated);
+    stompClient.subscribe('/user/queue/new', onMessageReceived);
 
-    // Tell your username to the server
-    stompClient.send("/app/chat.addUser",
+    // Request the list of online users at the moment
+    stompClient.send("/userchat/users/online",
         {},
         JSON.stringify({sender: username, type: 'JOIN'})
     );
 
-    connectingElement.classList.add('hidden');
+    //connectingElement.classList.add('hidden');
 }
 
 
@@ -63,39 +63,42 @@ function sendMessage(event) {
             content: messageInput.value,
             type: 'CHAT'
         };
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send("/userchat/chat/send", {}, JSON.stringify(chatMessage));
         messageInput.value = '';
     }
     event.preventDefault();
 }
 
 
-function onBroadcastReceived(payload) {
+function onUserListUpdated(payload) {
     var message = JSON.parse(payload.body);
+    var onlineUsers = JSON.parse(message.content);
 
-    var userElement = document.createElement('li');
+    usersList.innerHTML = ""; //TODO: This could be problematic. Change.
 
-    if(message.type === 'JOIN') {
+    for(var i in onlineUsers){
+        var usr = onlineUsers[i];
+
+        if(usr === me)
+            continue;
+
+        var userElement = document.createElement('li');
+
         userElement.classList.add('chat-message');
-        userElement.id = "user_" + message.sender;
+        userElement.id = "user_" + usr;
 
         var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(message.sender[0]);
+        var avatarText = document.createTextNode(usr[0]);
         avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.sender);
+        avatarElement.style['background-color'] = getAvatarColor(usr);
 
         userElement.appendChild(avatarElement);
 
         var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(message.sender);
+        var usernameText = document.createTextNode(usr);
         usernameElement.appendChild(usernameText);
         userElement.appendChild(usernameElement);
         usersList.appendChild(userElement);
-    } else if (message.type === 'LEAVE') {
-        userElement = document.querySelector("#user_" + message.sender);
-        usersList.removeChild(userElement);
-    } else {
-
     }
 
     /*var textElement = document.createElement('p');

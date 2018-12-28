@@ -18,18 +18,19 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
                 .addEndpoint("/ws")
+                .setAllowedOrigins("http://localhost", "http://127.0.0.1")
                 .addInterceptors(new HttpHandshakeInterceptor())
                 .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/app");
-	    registry.enableSimpleBroker("/topic");
+        registry.setApplicationDestinationPrefixes("/userchat");
+	    registry.enableSimpleBroker("/topic", "/queue", "/users");
     }
 
     @Override
     public void configureClientOutboundChannel(ChannelRegistration registration) {
-        registration.interceptors(new OutboundMessageInterceptor());
+        //registration.interceptors(new OutboundMessageInterceptor());
     }
 }
