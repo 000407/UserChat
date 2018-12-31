@@ -155,44 +155,63 @@ button.accent {
     background-color: #FFF;
     margin: 0;
     overflow: auto;
-    overflow-y: scroll;
-    padding: 0 20px 0px 20px;
     height: calc(100% - 150px);
 }
 
-#chat-page #messageForm {
+#messageForm {
     padding: 20px;
 }
 
-#chat-page ul li {
+/*#userList li {
     line-height: 1.5rem;
     padding: 10px 20px;
     margin: 0;
     border-bottom: 1px solid #f4f4f4;
+}*/
+
+/*Styles for Message Area*/
+#messageArea{
+    padding: 0 20px 0 20px;
 }
 
-#chat-page ul li p {
+#messageArea li {
+    display: inline-block;
+    width: 100%;
+}
+#messageArea li span.to-me{
+    float: right;
+    background-color: rgba(173, 255, 47, 0.4);
+}
+
+#messageArea li span.from-me{
+    float: left;
+    background-color: rgba(255, 113, 66, 0.4);
+}
+
+#messageArea li p {
     margin: 0;
 }
 
-#chat-page .event-message {
+#messageArea .event-message {
     width: 100%;
     text-align: center;
     clear: both;
 }
 
-#chat-page .event-message p {
+#messageArea .event-message p {
     color: #777;
     font-size: 14px;
     word-wrap: break-word;
 }
 
-#chat-page .chat-message {
-    padding-left: 68px;
+#messageArea li.chat-message i span {
+    border: 1px solid transparent;
+    border-radius: 1em;
     position: relative;
+    display: block;
 }
 
-#chat-page .chat-message i {
+#messageArea li.chat-message i {
     position: absolute;
     width: 1.5em;
     height: 1.5em;
@@ -204,19 +223,81 @@ button.accent {
     line-height: 1.5em;
     color: #fff;
     text-align: center;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+#messageArea li.chat-message span {
+    border: 1px solid transparent;
+    border-radius: 0.5em;
+}
+
+#messageArea li.chat-message p {
+    color: #43464b;
+    margin: 0;
+    padding: 1em;
+}
+/*Styles for Message Area::END*/
+
+/*Styles for the Users List*/
+#usersList{
+    padding: 0;
+}
+
+#usersList ul li p {
+    margin: 0;
+}
+
+#usersList .event-message {
+    width: 100%;
+    text-align: center;
+    clear: both;
+}
+
+#usersList .event-message p {
+    color: #777;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+#usersList .user {
+    padding: 0.5em 0;
+}
+
+#usersList .user i {
+    width: 1.5em;
+    height: 1.5em;
+    overflow: hidden;
+    margin-left: 0.5em;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.5em;
+    line-height: 1.5em;
+    color: #fff;
+    text-align: center;
     border-radius: 50%;
     font-style: normal;
     text-transform: uppercase;
 }
 
-#chat-page .chat-message span {
+#usersList .user span {
     color: #333;
     font-weight: 600;
+    margin-left: 0.5em;
 }
 
-#chat-page .chat-message p {
+#usersList .user p {
     color: #43464b;
 }
+
+#usersList li.new-message {
+    background-color: #128ff2;
+}
+
+#usersList li.user-active {
+    background-color: #c8c8c8;
+}
+/*Styles for Users List :: END*/
 
 #messageForm .input-group input {
     float: left;

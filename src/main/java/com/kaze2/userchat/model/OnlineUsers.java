@@ -29,6 +29,6 @@ public class OnlineUsers {
     }
 
     public boolean isOnline(String name){
-        return this.onlineUsers.containsKey(name);
+        return this.onlineUsers.containsValue(name);
     }
 }
